@@ -1,54 +1,38 @@
-; KHAN, Renee Althea F. 
+; KHAN, Renee Althea F. | 19/12/2024
+section .data
+original    db 'a','e','i','o','u','A','E','I','O','U', 0
+replacement db '4','3','!','0','v','4','3', '!','0','v'
+
 
 section .text
-bits 64      ;important
-default rel  ; important
+bits 64 ;asmfunc.asm:8: error: parser: instruction expected
+default rel 
 
 global asmfunc
-
 asmfunc:
-        
-    lea rsi, byte [rcx]
-    lea r11, byte [rdx]
-    lea rbx, byte [r8]
-        
-convert:
-    cmp byte [rsi], 0
-    je done
-    
-    mov rax, [rsi]    
+
+    lea r8, [original]
+    lea rbx, [replacement]
+    mov al, cl   
 
 loop_dict:
-    cmp byte [r11], 0 
-    je next
+    cmp byte [r8], 0 
+    je done
     
-    mov rdx, [r11]
+    mov rdx, [r8]
 
     cmp al, dl
     je replace
         
-    add r11, 1
-    add rbx, 1
+    inc r8
+    inc rbx
     
     jmp loop_dict
     
 replace:
     mov al, [rbx] 
-    mov [rsi], al
-    
-next: 
-    add rsi, 1
-    
-    lea r11, [original]
-    lea bx, [replacement]
-    
-    jmp convert
+
         
 done:
-    NEWLINE
-    PRINT_STRING "leet string: "
-    PRINT_STRING [var]
-    xor rax, rax
+    ;xor rax, rax
     ret
-
-    ; prints and newline are not permitted
