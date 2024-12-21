@@ -1,9 +1,12 @@
+// Renee Althea F. Khan || 12/21/2024
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#define MAX 200
+#define MAX 255
+#define MAX_TIME 1000
 
 
 extern char asmfunc(char* c);
@@ -42,15 +45,15 @@ void init(char* str) {
 	int i;
 	for (i = 0; i < MAX; i += 10) {
 		str[i] = 0;
-		str[i + 1] = 0;
-		str[i + 2] = 0;
-		str[i + 3] = 0;
-		str[i + 4] = 0;
-		str[i + 5] = 0;
-		str[i + 6] = 0;
-		str[i + 7] = 0;
-		str[i + 8] = 0;
-		str[i + 9] = 0;
+		str[i + 1] = '\0';
+		str[i + 2] = '\0';
+		str[i + 3] = '\0';
+		str[i + 4] = '\0';
+		str[i + 5] = '\0';
+		str[i + 6] = '\0';
+		str[i + 7] = '\0';
+		str[i + 8] = '\0';
+		str[i + 9] = '\0';
 	}
 }
 
@@ -59,6 +62,7 @@ int main() {
 	clock_t start, end;
 	char str[MAX], strC[MAX], strAsm[MAX];
 	double cTime = 0, asmTime = 0;
+	int i;
 
 	//initialize strings
 	init(str);
@@ -69,31 +73,39 @@ int main() {
 	printf("L33T Converter\n\n");
 
 	printf("Enter a string: ");
-	scanf_s("%199s", strC, (unsigned)_countof(strC)); // use scanf_s to scan the string
+	scanf_s("%[^\n]", str, (unsigned)_countof(str)); // use scanf_s to scan the string
 
-	strcpy_s(strAsm, sizeof(strAsm), strC);			  // use strcpy_s to copy the string
-	printf("Original String: %s \n\n", strAsm);
+	
+				  
+	printf("Original String: %s \n\n", str);
 
-	//call the C function
+	//call the C function ***********************************************************************
 	printf("---------------C function ---------------\n");
 	start = clock();
-	cFunc(strC);
+	for (i = 0; i < MAX_TIME; i++) {
+		strcpy_s(strC, sizeof(strC), str); // use strcpy_s // initialize with original text
+		cFunc(strC);
+	}
 	end = clock();
-	cTime = (double)(end - start) * 100000 / CLOCKS_PER_SEC;
+	cTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
 	printf("C Output: %s\n", strC);
-	printf("C function time: %f ms\n\n", cTime);
+	printf("C function time: (%ld - %dl) %f ms\n\n", start, end, cTime);
 
-	//call the ASM function
+	//call the ASM function **********************************************************************
 	printf("-------------ASM function---------------\n");
 	start = clock();
-	asmfunc(strAsm);
+	for (i = 0; i < MAX_TIME; i++) {
+		strcpy_s(strAsm, sizeof(strAsm), str); // use strcpy_s // initialize with original text
+		asmfunc(strAsm);
+	}
 	end = clock();
-	asmTime = (double)(end - start) * 100000 / CLOCKS_PER_SEC;
+	asmTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
 	printf("ASM Output: %s\n", strAsm);
-	printf("ASM function time: %f ms\n\n", asmTime);
+	printf("ASM function time: (%ld - %ld) %f ms\n\n", start, end, asmTime);
+
+
+	printf("Renee Althea Khan\n\n");
 
 
 	return 0;
-
-
 }
