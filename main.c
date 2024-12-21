@@ -7,7 +7,7 @@ extern void asmfunc(char* str);
 
 void cFunc(char* str) {
 
-	printf("---------------C function---------------");
+	printf("---------------C function---------------\n");
 	printf("Original String: %s", str);
 
 }
@@ -16,7 +16,7 @@ int main() {
 
 	char* str = "Hello World!";
 	cFunc(str);
-	leetfunc(str);
+	asmfunc(str);
 	return 0;
 
 
