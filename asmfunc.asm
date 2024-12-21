@@ -11,13 +11,19 @@ default rel
 global asmfunc
 asmfunc:
 
+    
     lea r8, [original]
     lea rbx, [replacement]
-    mov al, cl   
+
+convert:
+    cmp byte [rcx], 0
+    je done
+
+    mov al, byte [rcx]
 
 loop_dict:
     cmp byte [r8], 0 
-    je done
+    je next
     
     mov rdx, [r8]
 
@@ -31,8 +37,16 @@ loop_dict:
     
 replace:
     mov al, [rbx] 
+    mov [rcx], al
+
+next:
+    add rcx, 1
+    lea r8, [original]
+    lea bx, [replacement]
+    
+    jmp convert
 
         
 done:
-    ;xor rax, rax
+    xor rax, rax
     ret
