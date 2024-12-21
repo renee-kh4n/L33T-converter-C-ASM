@@ -1,4 +1,4 @@
-; KHAN, Renee Althea F. | 19/12/2024
+;KHAN, Renee Althea F. | 19/12/2024
 ;%include "io64.inc"
 section .data
 original    db 'a','e','i','o','u','A','E','I','O','U', 0
@@ -14,20 +14,20 @@ global asmfunc
 asmfunc:
     ;GET_STRING [var], 1000
 
-    PRINT_STRING "---------------ASM function---------------"
-    PRINT_STRING "original string: "
-    PRINT_STRING [cl] ; cl param for character
-    NEWLINE
+    ;PRINT_STRING "---------------ASM function---------------"
+    ;PRINT_STRING "original string: "
+    ;PRINT_STRING [cl] ; cl param for character
+    ;NEWLINE
     
-    lea rsi, [var]
+    mov r12b, byte [rcx]
     lea r8, [original]
     lea rbx, [replacement]
         
 convert:
-    cmp byte [rsi], 0
+    cmp r12b, 0
     je done
     
-    mov rax, [rsi]    
+    mov al, r12b  
 
 loop_dict:
     cmp byte [r8], 0 
@@ -45,10 +45,10 @@ loop_dict:
     
 replace:
     mov al, [rbx] 
-    mov [rsi], al
+    mov r12b, al
     
 next: 
-    inc rsi
+    mov r12b, byte [rcx + 1]
     
     lea r8, [original]
     lea bx, [replacement]
@@ -56,8 +56,10 @@ next:
     jmp convert
         
 done:
-    NEWLINE
-    PRINT_STRING "leet string: "
-    PRINT_STRING [var]
+    ;NEWLINE
+    ;PRINT_STRING "leet string: "
+    ;PRINT_STRING [var]
     xor rax, rax
     ret
+
+    ; print strings do not work here
