@@ -38,11 +38,12 @@ int main() {
 	double cTime = 0, asmTime = 0;
 
 	init(strC);
+	init(strAsm);
 
 	printf("L33T Converter\n\n");
 
 	printf("Enter a string: ");
-	scanf_s(" %s", strC);						 // use scanf_s to scan the string
+	scanf_s("%199s", strC, (unsigned)_countof(strC)); // use scanf_s to scan the string
 
 	strcpy_s(strAsm, sizeof(strAsm), strC);      // use strcpy_s to copy the string
 	printf("Original String: %s \n\n", strAsm);
@@ -52,7 +53,7 @@ int main() {
 	//cFunc(strC);
 	asmfunc(strC);
 	end = clock();
-	cTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
+	cTime = (double)(end - start) * 10000 / CLOCKS_PER_SEC;
 	printf("C Output: %s\n", strC);
 	printf("C function time: %f ms\n\n", cTime);
 
@@ -60,7 +61,7 @@ int main() {
 	start = clock();
 	asmfunc(strAsm);
 	end = clock();
-	asmTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
+	asmTime = (double)(end - start) * 10000 / CLOCKS_PER_SEC;
 	printf("ASM Output: %s\n", strAsm);
 	printf("ASM function time: %f ms\n\n", asmTime);
 
