@@ -3,28 +3,68 @@
 #include <string.h>
 #include <time.h>
 
-extern char asmfunc(char c);
+#define MAX 200
 
-void cFunc(char str) {
 
-	printf("---------------C function---------------\n");
-	printf("Original String: %c \n\n", str);
+extern char asmfunc(char* c);
 
+void cFunc(char* strC) {
+
+	
+	
+
+}
+
+void init(char* strC) {
+	int i;
+	for (i = 0; i < MAX; i += 10) {
+		strC[i] = 0;
+		strC[i + 1] = 0;
+		strC[i + 2] = 0;
+		strC[i + 3] = 0;
+		strC[i + 4] = 0;
+		strC[i + 5] = 0;
+		strC[i + 6] = 0;
+		strC[i + 7] = 0;
+		strC[i + 8] = 0;
+		strC[i + 9] = 0;
+	}
 }
 
 int main() {
 
-	//char str[] = { 'h', 'e', 'y', 0 };
-	//char orig[] = { 'a','e','i','o','u','A','E','I','O','U', 0 };
-	//char repl[] = { '4','3','!','0','v','4','3', '!','0','v' };
-	char c = 'a';
-	cFunc(c);
+	clock_t start, end;
+	char strC[MAX], strAsm[MAX];
+	double cTime = 0, asmTime = 0;
 
-	char d = asmfunc(c);
+	init(strC);
+
+	printf("L33T Converter\n\n");
+
+	printf("Enter a string: ");
+	scanf_s(" %s", strC);						 // use scanf_s to scan the string
+
+	strcpy_s(strAsm, sizeof(strAsm), strC);      // use strcpy_s to copy the string
+	printf("Original String: %s \n\n", strAsm);
+
+	printf("---------------C function---------------\n");
+	start = clock();
+	//cFunc(strC);
+	asmfunc(strC);
+	end = clock();
+	cTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
+	printf("C Output: %s\n", strC);
+	printf("C function time: %f ms\n\n", cTime);
 
 	printf("-------------ASM function---------------\n");
-	printf("Returned String : %c \n", d);
-	printf("str");
+	start = clock();
+	asmfunc(strAsm);
+	end = clock();
+	asmTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
+	printf("ASM Output: %s\n", strAsm);
+	printf("ASM function time: %f ms\n\n", asmTime);
+
+
 	return 0;
 
 
