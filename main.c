@@ -41,21 +41,21 @@ void cFunc(char* strC) {
 
 }
 
-void init(char* str) {
-	int i;
-	for (i = 0; i < MAX; i += 10) {
-		str[i] = 0;
-		str[i + 1] = '\0';
-		str[i + 2] = '\0';
-		str[i + 3] = '\0';
-		str[i + 4] = '\0';
-		str[i + 5] = '\0';
-		str[i + 6] = '\0';
-		str[i + 7] = '\0';
-		str[i + 8] = '\0';
-		str[i + 9] = '\0';
-	}
-}
+//void init(char* str) {
+//	int i;
+//	for (i = 0; i < MAX; i += 10) {
+//		str[i] = 0;
+//		str[i + 1] = '\0';
+//		str[i + 2] = '\0';
+//		str[i + 3] = '\0';
+//		str[i + 4] = '\0';
+//		str[i + 5] = '\0';
+//		str[i + 6] = '\0';
+//		str[i + 7] = '\0';
+//		str[i + 8] = '\0';
+//		str[i + 9] = '\0';
+//	}
+//}
 
 int main() {
 
@@ -64,10 +64,8 @@ int main() {
 	double cTime = 0, asmTime = 0;
 	int i;
 
-	//initialize strings
-	init(str);
-	init(strC);
-	init(strAsm);
+	//initialize string
+	memset(str, 0, MAX);
 
 	//prompt the user
 	printf("L33T Converter\n\n");
@@ -83,18 +81,20 @@ int main() {
 	printf("---------------C function ---------------\n");
 	start = clock();
 	for (i = 0; i < MAX_TIME; i++) {
+		memset(strC, 0, MAX);
 		strcpy_s(strC, sizeof(strC), str); // use strcpy_s // initialize with original text
 		cFunc(strC);
 	}
 	end = clock();
 	cTime = (double)(end - start) * 1000 / CLOCKS_PER_SEC;
 	printf("C Output: %s\n", strC);
-	printf("C function time: (%ld - %dl) %f ms\n\n", start, end, cTime);
+	printf("C function time: (%ld - %ld) %f ms\n\n", start, end, cTime);
 
 	//call the ASM function **********************************************************************
 	printf("-------------ASM function---------------\n");
 	start = clock();
 	for (i = 0; i < MAX_TIME; i++) {
+		memset(strAsm, 0, MAX);
 		strcpy_s(strAsm, sizeof(strAsm), str); // use strcpy_s // initialize with original text
 		asmfunc(strAsm);
 	}
